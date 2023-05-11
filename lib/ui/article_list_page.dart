@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_application/home_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:new_application/data/model/article.dart';
+import 'package:new_application/ui/home_page.dart';
+import 'package:new_application/ui/article_detail_page.dart';
+import 'package:new_application/widgets/platform_widget.dart';
 
 class ArticleListPage extends StatelessWidget {
 
@@ -18,6 +22,28 @@ class ArticleListPage extends StatelessWidget {
     );
   }
 
+  Widget _buildArticleItem(BuildContext context, Article article) {
+    return Material(
+      child: ListTile(
+        contentPadding:
+        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        leading: Hero(
+          tag: article.urlToImage,
+          child: Image.network(
+            article.urlToImage,
+            width: 100,
+          ),
+        ),
+        title: Text(article.title),
+        subtitle: Text(article.author),
+        onTap: () {
+          Navigator.pushNamed(context, ArticleDetailPage.routeName,
+              arguments: article);
+        },
+      ),
+    );
+  }
+
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +57,7 @@ class ArticleListPage extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('News App'),
+        transitionBetweenRoutes: false,
       ),
       child: _buildList(context),
     );

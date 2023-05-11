@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:new_application/article.dart';
-import 'package:new_application/webview.dart';
+import 'package:new_application/data/model/article.dart';
+import 'package:new_application/ui/article_web_view.dart';
 
 class ArticleDetailPage extends StatelessWidget {
   static const routeName = 'article_detail';

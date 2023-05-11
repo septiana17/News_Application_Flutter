@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_application/article.dart';
-import 'package:new_application/detail_page.dart';
-import 'package:new_application/styles.dart';
-import 'package:new_application/webview.dart';
-import 'package:new_application/home_page.dart.dart';
+import 'package:new_application/data/model/article.dart';
+import 'package:new_application/ui/article_detail_page.dart';
+import 'package:new_application/common/styles.dart';
+import 'package:new_application/ui/article_web_view.dart';
+import 'package:new_application/ui/home_page.dart';
 
 void main() {
   runApp(MyApp());
