@@ -1,47 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:new_application/data/model/article.dart';
+import 'package:new_application/provider/news_provider.dart';
 import 'package:new_application/ui/home_page.dart';
 import 'package:new_application/ui/article_detail_page.dart';
 import 'package:new_application/widgets/platform_widget.dart';
+import 'package:new_application/widgets/card_article.dart';
+import 'package:new_application/data/api/api_service.dart';
+import 'package:new_application/provider/news_provider.dart';
+import 'package:provider/provider.dart';
 
 class ArticleListPage extends StatelessWidget {
+  const ArticleListPage({Key key}) : super(key: key);
 
-  Widget _buildList(BuildContext context) {
-    return FutureBuilder<String>(
-      future: DefaultAssetBundle.of(context).loadString('assets/articles.json'),
-      builder: (context, snapshot) {
-        final List<Article> articles = parseArticles(snapshot.requireData);
+  Widget _buildList() {
+    return Consumer<NewsProvider>(builder: (context, state, _) {
+      if (state.state == ResultState.loading) {
+        return Center(child: CircularProgressIndicator());
+      } else if (state.state == ResultState.hasData) {
         return ListView.builder(
-          itemCount: articles.length,
-          itemBuilder: (context, index){
-            return _buildArticleItem(context, articles[index]);
+          shrinkWrap: true,
+          itemCount: state.result.articles.length,
+          itemBuilder: (context, index) {
+            var article = state.result.articles[index];
+            return CardArticle(article: article);
           },
         );
-      },
-    );
-  }
-
-  Widget _buildArticleItem(BuildContext context, Article article) {
-    return Material(
-      child: ListTile(
-        contentPadding:
-        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Hero(
-          tag: article.urlToImage,
-          child: Image.network(
-            article.urlToImage,
-            width: 100,
-          ),
-        ),
-        title: Text(article.title),
-        subtitle: Text(article.author),
-        onTap: () {
-          Navigator.pushNamed(context, ArticleDetailPage.routeName,
-              arguments: article);
-        },
-      ),
-    );
+      } else if (state.state == ResultState.noData) {
+        return Center(child: Text(state.message));
+      } else if (state.state == ResultState.error) {
+        return Center(child: Text(state.message));
+      } else {
+        return Center(child: Text(''));
+      }
+    });
   }
 
   Widget _buildAndroid(BuildContext context) {
@@ -49,7 +41,7 @@ class ArticleListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('News App'),
       ),
-      body: _buildList(context),
+      body: _buildList(),
     );
   }
 
@@ -59,7 +51,7 @@ class ArticleListPage extends StatelessWidget {
         middle: Text('News App'),
         transitionBetweenRoutes: false,
       ),
-      child: _buildList(context),
+      child: _buildList(),
     );
   }
 

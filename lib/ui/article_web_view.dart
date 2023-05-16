@@ -8,7 +8,7 @@ class ArticleWebView extends StatelessWidget {
 
   final String url;
 
-  const ArticleWebView({required this.url});
+  const ArticleWebView({ this.url});
 
   @override
   Widget build(BuildContext context) {

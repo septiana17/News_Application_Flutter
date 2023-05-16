@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:new_application/widgets/platform_widget.dart';
 
 class SettingsPage extends StatelessWidget {
+  static const String settingsTitle = 'Setting';
+
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(
-        androidBuilder: _buildAndroid,
-        iosBuilder: _buildIos,
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
     );
   }
 
@@ -41,40 +43,43 @@ class SettingsPage extends StatelessWidget {
               onChanged: (value) {
                 defaultTargetPlatform == TargetPlatform.iOS
                     ? showCupertinoDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (context) {
-                    return CupertinoAlertDialog(
-                      title: Text('Coming Soon!'),
-                      content: Text('This feature will be coming soon!'),
-                      actions: [
-                        CupertinoDialogAction(
-                          child: Text('Ok'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                )
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            title: Text('Coming Soon!'),
+                            content: Text('This feature will be coming soon!'),
+                            actions: [
+                              CupertinoDialogAction(
+                                child: Text('Ok'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      )
                     : showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('Coming Soon!'),
-                      content: Text('This feature will be coming soon!'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Coming Soon!'),
+                            content: Text('This feature will be coming soon!'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Ok',
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
               },
             ),
           ),
